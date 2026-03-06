@@ -1,4 +1,4 @@
-# miniproject1 pfernandezdecordova1/miniproject1-FastingCompanion
+# miniproject1 pfernandezdecordova1/FastingCompanion
 
 Welcome to Fasting Companion, a web application designed to help my friend Kike stay safe during fasting. 
 
