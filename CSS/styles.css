@@ -53,6 +53,22 @@ body {
     font-weight: 300;
 }
 
+.hero-media {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.hero-media img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
 .user-area {
     margin-top: 12px;
     display: flex;
@@ -672,15 +688,24 @@ section h2 {
     font-weight: 500;
 }
 
-
-
-.controls {
+.final-fast-actions {
+    width: 100%;
     display: flex;
-    gap: 15px;
-    justify-content: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
     flex-wrap: wrap;
-    padding: 20px 0;
 }
+
+.safety-start-btn {
+    display: none;
+}
+
+#safety-agree:checked ~ .final-fast-actions .safety-start-btn {
+    display: inline-block;
+}
+
+
 
 .control-btn {
     padding: 12px 30px;
@@ -778,10 +803,6 @@ section h2 {
 
     .progress-info {
         grid-template-columns: 1fr;
-    }
-
-    .controls {
-        flex-direction: column;
     }
 
     .control-btn {
@@ -893,16 +914,34 @@ section h2 {
 /* Steps */
 .step { display: none; opacity: 0; transform: translateY(6px); transition: all 320ms ease; max-height:0; overflow:hidden; }
 .step.active { opacity:1; transform: translateY(0); max-height: 2000px; }
-.step[data-step] { /* hidden by default, shown via radio selectors below */ }
 .step .step-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:16px; }
 .next-step { background: linear-gradient(90deg,#667eea,#764ba2); color: #fff; border: none; padding: 10px 14px; border-radius:8px; }
 .prev-step { background: transparent; border: 1px solid rgba(0,0,0,0.06); padding:10px 14px; border-radius:8px; }
 
 /* Home screen */
-.home-screen { padding: 30px; display:flex; align-items:center; justify-content:center; animation: fadeIn 300ms ease; }
+.home-screen {
+    position: fixed;
+    inset: 0;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 300ms ease;
+    z-index: 90;
+    background:
+        linear-gradient(135deg, rgba(30, 40, 90, 0.78), rgba(68, 24, 119, 0.74)),
+        url('../images/overlay-bg.jpg') center/cover no-repeat;
+}
 .home-screen.hidden { display:none; }
 .home-card { background: linear-gradient(180deg,#fff,#f7fbff); padding: 22px; border-radius:12px; width: min(780px, 96%); box-shadow: 0 10px 40px rgba(0,0,0,0.08); text-align:center; }
 .home-card h2 { color: #333; margin-bottom: 15px; }
+
+.home-motivation {
+    color: #4f46e5;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: -4px 0 16px;
+}
 
 .home-info-grid {
     display: grid;
@@ -1018,6 +1057,10 @@ section h2 {
 }
 
 @media (max-width: 480px) {
+    .hero-media {
+        grid-template-columns: 1fr;
+    }
+
     .modal { padding: 18px; }
     .step .step-actions { flex-direction: column-reverse; gap:8px; }
 }
@@ -1052,14 +1095,9 @@ section h2 {
     max-height: 2000px;
 }
 
-/* When started checkbox is checked, show home screen and hide steps/controls */
+/* When started checkbox is checked, show home screen and hide setup steps */
 #started:checked ~ main #home-screen { display: flex; }
-#started:checked ~ main .step,
-#started:checked ~ main .controls { display: none; }
-
-/* Enable Start label only after finishing setup (s5 radio checked) */
-.start-label { pointer-events: none; opacity: 0.6; }
-#s5:checked ~ .main-content .controls .start-label { pointer-events: auto; opacity: 1; }
+#started:checked ~ main .step { display: none; }
 
 /* Show the correct recommendation based on duration selection */
 .home-recommendations .rec { display: none; background: #fff; padding: 12px; border-radius: 8px; margin-top: 12px; }

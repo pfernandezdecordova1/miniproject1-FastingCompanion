@@ -14,6 +14,10 @@
                 <div class="header-icon">⏱️</div>
                 <h1>Fasting Companion</h1>
                 <p class="subtitle">Science-backed guidance for safe, healthy fasting</p>
+                <div class="hero-media">
+                    <img src="images/hero-water.jpg" alt="Healthy morning routine with water and sunlight">
+                    <img src="images/hero-food.jpg" alt="Fresh nutritious foods on a table">
+                </div>
                 <span id="user-greeting" class="user-greeting" aria-live="polite"></span>
             </div>
         </header>
@@ -32,7 +36,7 @@
                 <div class="modal-icon">👋</div>
                 <h2 id="modal-title">Welcome to Fasting Companion</h2>
                 <p class="muted">Enter your name to get personalized guidance for your fasting journey.</p>
-                <form id="modal-login-form" class="modal-form" onsubmit="return false;">
+                <form id="modal-login-form" class="modal-form">
                     <input id="modal-name" type="text" placeholder="Your name" aria-label="Your name">
                         <div class="modal-actions">
                             <label for="modal-toggle" class="control-btn continue-btn">Continue</label>
@@ -272,31 +276,25 @@
                         <li>Pregnant and breastfeeding individuals should not fast without medical approval.</li>
                         <li>Never fast if you're ill or recovering from illness.</li>
                     </ul>
-                    <div class="safety-checkbox-group" style="margin-top: 15px;">
+                    <div class="safety-checkbox-group">
                         <input type="checkbox" id="safety-agree" class="safety-checkbox">
                         <label for="safety-agree" class="safety-checkbox-label">
                             I have read and understand the safety guidelines and accept responsibility for my fasting
                         </label>
+
+                        <div class="final-fast-actions">
+                            <label for="s4" class="control-btn prev-step">Back</label>
+                            <label for="started" class="control-btn start-btn safety-start-btn">Start Fast</label>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="step-actions">
-                    <label for="s4" class="control-btn prev-step">Back</label>
-                    <label for="s5" class="next-step control-btn">Start Fasting</label>
-                </div>
-            </section>
-
-            <!-- Control Buttons -->
-            <section class="controls">
-                <label for="started" id="start-btn" class="control-btn start-btn start-label" style="opacity: 0.5; cursor: not-allowed; pointer-events: none;" data-disabled="true">Start Fast</label>
-                <label for="started" id="stop-btn" class="control-btn stop-btn stop-label">Stop Fast</label>
-                <label for="p0" id="reset-btn" class="control-btn reset-btn reset-label">Reset Progress</label>
             </section>
 
             <!-- Home screen shown after starting fast -->
             <section id="home-screen" class="home-screen hidden">
                 <div class="home-card">
                     <h2 id="home-title">Good luck, <span id="home-name">Faster</span>!</h2>
+                    <p class="home-motivation">Just do it — one hour at a time.</p>
                     <div class="home-info-grid">
                         <div class="info-item">
                             <span class="info-label">Duration</span>

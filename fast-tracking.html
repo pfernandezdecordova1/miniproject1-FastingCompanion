@@ -228,6 +228,8 @@
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-stop {
@@ -363,34 +365,34 @@
     <div class="tracking-container">
         <div class="tracking-card">
             <div class="tracking-header">
-                <h1>Good luck, <span id="user-name">Faster</span>!</h1>
-                <p>Your fasting journey is in progress 🚀</p>
+                <h1>Good luck, Faster!</h1>
+                <p>Your fasting journey plan is ready 🚀</p>
             </div>
 
             <!-- Info Grid -->
             <div class="info-grid">
                 <div class="info-card">
                     <div class="info-label">Duration</div>
-                    <div class="info-value" id="display-duration">-</div>
+                    <div class="info-value">Choose in setup</div>
                 </div>
                 <div class="info-card">
                     <div class="info-label">Daily Goal</div>
-                    <div class="info-value" id="display-goal">-</div>
+                    <div class="info-value">3L–4.5L</div>
                 </div>
                 <div class="info-card">
                     <div class="info-label">Started</div>
-                    <div class="info-value" id="display-started">-</div>
+                    <div class="info-value">When you begin</div>
                 </div>
             </div>
 
             <!-- Countdown -->
             <div class="countdown-box">
                 <div class="countdown-label">⏳ Time Remaining</div>
-                <div class="countdown-display" id="countdown">00:00:00</div>
+                <div class="countdown-display">00:00:00</div>
                 <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="progress-fill"></div>
+                    <div class="progress-bar-fill"></div>
                 </div>
-                <div class="progress-label" id="progress-text">0% Complete</div>
+                <div class="progress-label">Track progress from your selected step controls</div>
             </div>
 
             <!-- Hydration Tracker -->
@@ -400,20 +402,20 @@
                 <div class="water-stats">
                     <div class="water-stat">
                         <div class="water-stat-label">Daily Goal</div>
-                        <div class="water-stat-value" id="water-goal-display">-</div>
+                        <div class="water-stat-value">3L–4.5L</div>
                     </div>
                     <div class="water-stat">
                         <div class="water-stat-label">Current Intake</div>
-                        <div class="water-stat-value" id="water-current-display">0 ml</div>
+                        <div class="water-stat-value">Use selectors</div>
                     </div>
                     <div class="water-stat">
                         <div class="water-stat-label">Still Need</div>
-                        <div class="water-stat-value" id="water-remaining-display">-</div>
+                        <div class="water-stat-value">Goal - intake</div>
                     </div>
                 </div>
 
                 <div class="water-meter">
-                    <div class="water-meter-fill" id="water-fill"></div>
+                    <div class="water-meter-fill"></div>
                 </div>
 
                 <!-- Water Input -->
@@ -460,165 +462,18 @@
             </div>
 
             <!-- Tips Section -->
-            <div class="tips-section" id="tips-box">
+            <div class="tips-section">
                 <h3 class="tips-title">🎯 Fast Tips</h3>
-                <p class="tips-text" id="tips-text">Stay hydrated and monitor your body's signals.</p>
+                <p class="tips-text">Stay hydrated, listen to your body, and prioritize safety over intensity.</p>
             </div>
 
             <!-- Action Buttons -->
             <div class="action-buttons">
-                <button class="btn btn-back" onclick="goBackToSetup()">← Back to Setup</button>
-                <button class="btn btn-stop" onclick="stopFast()">Stop Fast</button>
-                <button class="btn btn-reset" onclick="resetFast()">Reset</button>
+                <a class="btn btn-back" href="index.html">← Back to Setup</a>
+                <a class="btn btn-stop" href="index.html">Stop Fast</a>
+                <a class="btn btn-reset" href="index.html">Reset</a>
             </div>
         </div>
     </div>
-
-    <script>
-        // Duration to milliseconds
-        const DURATIONS = {
-            1: 24 * 60 * 60 * 1000,
-            2: 2 * 24 * 60 * 60 * 1000,
-            3: 3 * 24 * 60 * 60 * 1000,
-            5: 5 * 24 * 60 * 60 * 1000
-        };
-
-        const WATER_GOALS = {
-            1: 3000,
-            2: 3500,
-            3: 4000,
-            5: 4500
-        };
-
-        const TIPS = {
-            1: '🎯 1-Day Fast: Drink regularly throughout the day. Stay active but avoid intense exercise.',
-            2: '🎯 2-Day Fast: Electrolytes are now important. Take electrolytes twice per day. Light activities only.',
-            3: '🎯 3-Day Fast: Strong hydration and electrolytes essential. Electrolytes twice daily. Rest is key.',
-            5: '🎯 5-Day Fast: Medical supervision recommended. Electrolytes 2-3 times daily. Minimize activity. Listen to your body.'
-        };
-
-        let fastData = {
-            startTime: null,
-            endTime: null,
-            duration: 1,
-            userName: 'Faster',
-            currentWater: 0
-        };
-
-        function init() {
-            // Get data from localStorage
-            const stored = localStorage.getItem('fastData');
-            if (stored) {
-                fastData = JSON.parse(stored);
-            }
-
-            const userName = localStorage.getItem('userName') || 'Faster';
-            fastData.userName = userName;
-
-            // Display info
-            document.getElementById('user-name').textContent = fastData.userName;
-            displayFastInfo();
-            setupWaterTracking();
-            startTimer();
-        }
-
-        function displayFastInfo() {
-            const durationText = {
-                1: '1 Day',
-                2: '2 Days',
-                3: '3 Days',
-                5: '5 Days'
-            };
-
-            document.getElementById('display-duration').textContent = durationText[fastData.duration];
-            document.getElementById('display-goal').textContent = WATER_GOALS[fastData.duration] + ' ml';
-            document.getElementById('water-goal-display').textContent = (WATER_GOALS[fastData.duration] / 1000).toFixed(1) + 'L';
-
-            // Start time
-            const startDate = new Date(fastData.startTime);
-            document.getElementById('display-started').textContent = startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-            // Tips
-            document.getElementById('tips-text').textContent = TIPS[fastData.duration];
-
-            updateWaterDisplay();
-        }
-
-        function setupWaterTracking() {
-            const waterRadios = document.querySelectorAll('input[name="water-intake"]');
-            waterRadios.forEach(radio => {
-                radio.addEventListener('change', (e) => {
-                    fastData.currentWater = parseInt(e.target.value);
-                    localStorage.setItem('fastData', JSON.stringify(fastData));
-                    updateWaterDisplay();
-                });
-            });
-        }
-
-        function updateWaterDisplay() {
-            const goal = WATER_GOALS[fastData.duration];
-            const current = fastData.currentWater;
-            const remaining = Math.max(0, goal - current);
-
-            document.getElementById('water-current-display').textContent = current + ' ml';
-            document.getElementById('water-remaining-display').textContent = remaining + ' ml';
-
-            // Update progress bar
-            const percent = (current / goal) * 100;
-            document.getElementById('water-fill').style.width = Math.min(100, percent) + '%';
-        }
-
-        function startTimer() {
-            const timerInterval = setInterval(() => {
-                const now = Date.now();
-                const remaining = Math.max(0, fastData.endTime - now);
-
-                // Calculate time display
-                const totalSeconds = Math.floor(remaining / 1000);
-                const hours = Math.floor(totalSeconds / 3600);
-                const minutes = Math.floor((totalSeconds % 3600) / 60);
-                const seconds = totalSeconds % 60;
-
-                document.getElementById('countdown').textContent = 
-                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-                // Update progress
-                const totalDuration = DURATIONS[fastData.duration];
-                const elapsed = totalDuration - remaining;
-                const progressPercent = (elapsed / totalDuration) * 100;
-
-                document.getElementById('progress-fill').style.width = progressPercent + '%';
-                document.getElementById('progress-text').textContent = Math.round(progressPercent) + '% Complete';
-
-                // Stop timer when complete
-                if (remaining === 0) {
-                    clearInterval(timerInterval);
-                    document.getElementById('countdown').textContent = '00:00:00';
-                }
-            }, 1000);
-        }
-
-        function goBackToSetup() {
-            window.location.href = 'index.html';
-        }
-
-        function stopFast() {
-            localStorage.removeItem('fastData');
-            localStorage.removeItem('userName');
-            window.location.href = 'index.html';
-        }
-
-        function resetFast() {
-            if (confirm('Are you sure you want to reset your fast?')) {
-                fastData.currentWater = 0;
-                document.querySelector('input[name="water-intake"]').checked = true;
-                localStorage.setItem('fastData', JSON.stringify(fastData));
-                updateWaterDisplay();
-            }
-        }
-
-        // Initialize on page load
-        window.addEventListener('load', init);
-    </script>
 </body>
 </html>
